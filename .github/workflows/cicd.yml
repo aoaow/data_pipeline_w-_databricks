@@ -1,27 +1,19 @@
-name: Databricks CI/CD Pipeline
-
+name: CI
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    env:
-      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-
-    - name: Install Databricks CLI
-      run: pip install databricks-cli
-
-    - name: Deploy Notebooks
-      run: |
-        databricks workspace import_dir ./notebooks /Users/eleanorahsa@gmail.com/notebooks -o
+      - uses: actions/checkout@v3
+      - name: install packages
+        run: make install
+      - name: lint
+        run: make lint
+      - name: format
+        run: make format
