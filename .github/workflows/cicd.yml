@@ -24,4 +24,4 @@ jobs:
 
     - name: Deploy Notebooks
       run: |
-        databricks workspace import_dir ./notebooks /Users/your.email@databricks.com/notebooks -o
+        databricks workspace import_dir ./notebooks /Users/eleanorahsa@gmail.com/notebooks -o
