@@ -1,23 +1,33 @@
+from pyspark.sql.functions import year, when
+from pyspark.sql.functions import sum as sum_
+from pyspark.sql import SparkSession
+
 # Databricks notebook source
 # Read data from the table into a DataFrame
+spark = SparkSession.builder.appName("InjuryDataAnalysis").getOrCreate()
 df = spark.table("my_database.serious_injury_outcome_indicators_2000_2022")
-
-from pyspark.sql.functions import year, when
 
 # Assume the 'Period' column is of date or timestamp type
 df_transformed = df.withColumn("year", year("Period")) \
-                   .withColumn("before_2010", when(year("Period") < 2010, 1).otherwise(0))
+                   .withColumn("before_2010", 
+                               when(year("Period") < 2010, 1).otherwise(0)
+                               )
 
-from pyspark.sql.functions import sum as sum_
-
-# Filter the DataFrame where Severity is 'FATAL'
-df_fatal = df.filter(df.Severity == 'Fatal')
-
-# Group by 'Age' and compute the total 'Data_value'
-df_aggregated = df_fatal.groupBy("Age").agg(sum_("Data_value").alias("total_cases"))
-
-# Order by 'total_cases' in descending order
-df_result = df_aggregated.orderBy(df_aggregated.total_cases.desc())
+df.createOrReplaceTempView("injury_data")
+# Execute the SQL query
+df_result = spark.sql("""
+SELECT
+    Age,
+    SUM(Data_value) AS total_cases
+FROM
+    injury_data
+WHERE
+    Severity = 'Fatal'
+GROUP BY
+    Age
+ORDER BY
+    total_cases DESC
+""")
 
 # Show the result
 df_result.show()
