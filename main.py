@@ -1,5 +1,4 @@
 from pyspark.sql.functions import year, when
-from pyspark.sql.functions import sum as sum_
 from pyspark.sql import SparkSession
 
 # Databricks notebook source
