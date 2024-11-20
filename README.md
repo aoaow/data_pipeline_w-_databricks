@@ -8,6 +8,7 @@
 
 This project demonstrates the creation of a data pipeline using Databricks and Spark SQL. The pipeline reads data from a Databricks table containing serious injury outcome indicators from 2000 to 2022, performs data transformations and aggregations using Spark SQL, and writes the results to a new table for further analysis.
 
+![Successful Implementation in Databricks](screenshot.png)
 ## **Features**
 
 - **Data Source**: Databricks table `my_database.serious_injury_outcome_indicators_2000_2022`.
