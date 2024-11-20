@@ -12,22 +12,13 @@ This project demonstrates the creation of a data pipeline using Databricks and S
 ## **Features**
 
 - **Data Source**: Databricks table `my_database.serious_injury_outcome_indicators_2000_2022`.
-- **Data Processing**:
-  - Filtering records where `Severity` is `'Fatal'`.
-  - Grouping data by `Age` and calculating the total `Data_value` for each age group.
-  - Ordering the results in descending order of total cases.
+- **Data Transformation**: Add a new column `year` that the injury case took place and a boolean column indicating whether the case happened before 2010 or not.
+- **Data Processing**: Count the total case number in each severity level.
 - **Data Sink**: The aggregated results are saved to a new Databricks table `my_database.injury_outcome_summary`.
-
-
-## **Data Processing Details**
-
-- **Filtering**: The pipeline filters records where the `Severity` column is `'Fatal'`, focusing the analysis on fatal injury cases.
-- **Aggregation**: It groups the filtered data by `Age` and calculates the total number of cases (`Data_value`) for each age group.
-- **Ordering**: The results are ordered in descending order to highlight the age groups with the highest number of fatal cases.
 
 ## **Dependencies**
 
-- **PySpark**: For data processing with Spark.
+- **Spark SQL**: For data processing with Spark.
 - **Databricks CLI**: For interacting with Databricks from the command line (if automating deployment).
 
 ## **Contributing**
